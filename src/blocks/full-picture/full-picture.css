@@ -1,0 +1,5 @@
+.full-picture {
+}
+.full-picture:before{
+  opacity:0.9;
+}

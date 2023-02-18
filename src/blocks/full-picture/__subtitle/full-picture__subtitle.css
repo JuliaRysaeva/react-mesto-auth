@@ -1,0 +1,9 @@
+.full-picture__subtitle {
+  position: absolute;
+  bottom:-22px;
+  left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+
+}

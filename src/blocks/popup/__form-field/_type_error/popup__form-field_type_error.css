@@ -1,0 +1,4 @@
+.popup__form-field_type_error {
+  border-bottom-color: red;
+  margin-bottom: 5px;
+}
