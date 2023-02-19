@@ -29,6 +29,7 @@ export default function App() {
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isNotSuccess, setIsNotSuccess] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
 
   React.useEffect(() => {
     Promise.all([api.getUserInfoApi(), api.getInitialCards()])
@@ -106,9 +107,9 @@ export default function App() {
       });
   }
 
-  function handleUpdateAvatar(avatar) {
+  function handleUpdateAvatar({avatar}) {
     api
-      .changeAvatarApi(avatar.link)
+      .changeAvatarApi(avatar)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -117,6 +118,21 @@ export default function App() {
         console.log(`Ошибка: ${err}`);
       });
   }
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.getProfile(token)
+        .then((res) => {
+          setLoggedIn(true);
+          setUserEmail(res.data.email);
+          navigate('/mesto');
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [])
 
   function handleRegister(email,password) {
     auth.register(email,password)
@@ -135,6 +151,7 @@ export default function App() {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setLoggedIn(true)
+          setUserEmail(userData.email);
           navigate('/mesto', { replace: true })
         }
       })
@@ -152,11 +169,14 @@ export default function App() {
       setIsNotSuccess(false);
     }
   }
+  function LoggedOut(){
+    setLoggedIn(false)
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
-        <Header />
+        <Header loggedIn={loggedIn} userEmail={userEmail} LoggedOut={LoggedOut}/>
         <Routes>
           <Route
             path='/'

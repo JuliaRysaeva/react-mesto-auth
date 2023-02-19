@@ -57,11 +57,11 @@ class Api {
       .then(res => this._serverResult(res))
   }
   //смена аватара
-  changeAvatarApi(url) {
+  changeAvatarApi(avatar) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({ avatar: url })
+      body: JSON.stringify({ avatar })
     })
       .then(res => this._serverResult(res))
   }
