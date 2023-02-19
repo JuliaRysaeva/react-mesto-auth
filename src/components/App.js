@@ -39,7 +39,7 @@ export default function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, [setCurrentUser, setCards]);
+  }, [loggedIn]);
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
@@ -118,49 +118,39 @@ export default function App() {
       });
   }
 
-  React.useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.getProfile(jwt).then((res) => {
-        if (res) {
-          const userData = {
-            username: res.username,
-            email: res.email,
-          };
-          setLoggedIn(true);
-          setUserData(userData);
-          navigate('/mesto', { replace: true });
-        }
-      });
-    }
-  }, []);
-
-  function handleRegister(email, password) {
-    auth
-      .signup(email, password)
+  function handleRegister(email,password) {
+    auth.register(email,password)
       .then(() => {
-        setIsSuccess(true)
-        navigate('/sign-in');
+        setIsSuccess(true); 
       })
       .catch((err) => {
-        console.log(`${err} что-то пошло не так`);
-      });
+        console.log(err);
+        setIsNotSuccess(true);
+      })
   }
-  function handleLogin(userData) {
-    auth
-      .profile(userData.email, userData.password)
-      .then((data) => {
-        if (data.jwt) {
-          localStorage.setItem('jwt', data.jwt);
-          setLoggedIn(true);
-          setUserData({ email: '', password: '' });
 
-          navigate('/users/me');
+  function handleLogin(userData) {
+    auth.login(userData.email, userData.password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setLoggedIn(true)
+          navigate('/mesto', { replace: true })
         }
       })
       .catch((err) => {
-        console.log(`${err} что-то пошло не так`);
-      });
+        console.log(err);
+        setIsNotSuccess(true);
+      })
+  }
+
+  function closeMessagePopup() {
+    if (isSuccess) {
+      setIsSuccess(false);
+      navigate('/sign-in', { replace: true });
+    } else {
+      setIsNotSuccess(false);
+    }
   }
 
   return (
@@ -179,13 +169,13 @@ export default function App() {
             }
           />
           <Route
-            path='/sign-in'
-            element={<Login handleLogin={handleLogin} />}
-          />
-          <Route
             path='/sign-up'
             element={<Register handleRegister={handleRegister} />}
-          />
+          /> 
+          <Route
+            path='/sign-in'
+            element={<Login handleLogin={handleLogin} />}
+          />          
           <Route
             path='/mesto'
             element={
@@ -231,7 +221,7 @@ export default function App() {
             }
           />
         </Routes>
-        <InfoTooltip isSuccess={isSuccess} isNotSuccess={isNotSuccess} onClose={closeAllPopups} />
+        <InfoTooltip isSuccess={isSuccess} isNotSuccess={isNotSuccess} onClose={closeMessagePopup} />
       </div>
     </CurrentUserContext.Provider>
   );

@@ -4,8 +4,8 @@ export default function Login({handleLogin}) {
   const [userData, setUserData] = React.useState({ email: '', password: '' });
 
   function handleChange(e) {
-    const { email, value } = e.target;
-    setUserData({...userData,[email]: value})
+    const { name, value } = e.target;
+    setUserData({...userData,[name]: value})
   }
 
   function handleSubmit(e) {
@@ -25,9 +25,8 @@ export default function Login({handleLogin}) {
           className='auth__field'
           type='email'
           name='email'
-          id='email'
           placeholder='Email:'
-          value={userData.email || ''}
+          value={userData.email}
           onChange={handleChange}
           required
         />
@@ -35,9 +34,8 @@ export default function Login({handleLogin}) {
           className='auth__field'
           type='password'
           name='password'
-          id='password'
           placeholder='Пароль:'
-          value={userData.email || ''}
+          value={userData.password}
           onChange={handleChange}
           required
         />

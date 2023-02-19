@@ -1,0 +1,10 @@
+.popup__confirm{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 430px;    
+  border-radius: 10px;
+  padding: 36px;
+  box-sizing: border-box;
+  background-color: white;
+}

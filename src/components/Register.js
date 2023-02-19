@@ -5,8 +5,8 @@ export default function Register({handleRegister}) {
   const [userData, setUserData] = React.useState({email:'', password:''});
 
   function handleChange(e) {
-    const { email, value } = e.target;
-    setUserData({...userData, [email]: value})
+    const { name, value } = e.target;
+    setUserData({...userData, [name]: value})
   }
 
   function handleSubmit(e) {

@@ -28,16 +28,18 @@ class apiAuth {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    }).then(this.response);
+    })
+    .then(this.response)
+    .then((data) => data);
   }
 
   getProfile(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
+        'Authorization': `Bearer ${jwt}`,
       },
     })
       .then(this.response)
