@@ -10,7 +10,7 @@ class Api {
     this._url = config.url;
     this._headers = config.headers;
   }
-  _serverResult(res) {
+  _getServerResult(res) {
     if (res.ok) {
       return res.json()
     } else {
@@ -22,13 +22,13 @@ class Api {
     return fetch(`${this._url}/cards`, {
       headers: this._headers
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   getUserInfoApi() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //инфо о пользователе
   setUserInfoApi(name, about) {
@@ -37,7 +37,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ name: name, about: about })
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //добавление карточки
   addCardApi(name, link) {
@@ -46,7 +46,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ name: name, link: link })
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //удаление карточки
   deleteCardApi(cardId) {
@@ -54,7 +54,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //смена аватара
   changeAvatarApi(avatar) {
@@ -63,7 +63,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ avatar })
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //постановка лайка 
   addLikeApi(card) {
@@ -72,7 +72,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ _id: 'a76f63b4457d81002b00501b' })
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   //удаление лайка
   deleteLikeApi(card) {
@@ -80,7 +80,7 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._serverResult(res))
+      .then(res => this._getServerResult(res))
   }
   changeLikeCardStatus(card, isLiked) {
     if (isLiked) {

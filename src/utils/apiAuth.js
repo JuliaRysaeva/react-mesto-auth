@@ -3,7 +3,7 @@ class apiAuth {
     this._baseUrl = baseUrl;
   }
   
-  response = (res) => {
+  getResponse = (res) => {
     if (res.ok) {
       return res.json();
     } else {
@@ -18,7 +18,7 @@ class apiAuth {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    }).then(this.response);
+    }).then(this.getResponse);
   }
 
   login(email, password) {
@@ -29,7 +29,7 @@ class apiAuth {
       },
       body: JSON.stringify({ email, password }),
     })
-    .then(this.response)
+    .then(this.getResponse)
     .then((data) => data);
   }
 
@@ -42,7 +42,7 @@ class apiAuth {
         'Authorization': `Bearer ${jwt}`,
       },
     })
-      .then(this.response)
+      .then(this.getResponse)
       .then((data) => data);
   }
 }
