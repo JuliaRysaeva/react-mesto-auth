@@ -32,6 +32,7 @@ export default function App() {
   const [userEmail, setUserEmail] = React.useState('');
 
   React.useEffect(() => {
+    if (!loggedIn) return;
     Promise.all([api.getUserInfoApi(), api.getInitialCards()])
       .then(([res, arr]) => {
         setCurrentUser(res);
@@ -107,7 +108,7 @@ export default function App() {
       });
   }
 
-  function handleUpdateAvatar({avatar}) {
+  function handleUpdateAvatar({ avatar }) {
     api
       .changeAvatarApi(avatar)
       .then((res) => {
@@ -134,10 +135,10 @@ export default function App() {
     }
   }, [])
 
-  function handleRegister(email,password) {
-    auth.register(email,password)
+  function handleRegister(email, password) {
+    auth.register(email, password)
       .then(() => {
-        setIsSuccess(true); 
+        setIsSuccess(true);
       })
       .catch((err) => {
         console.log(err);
@@ -169,14 +170,14 @@ export default function App() {
       setIsNotSuccess(false);
     }
   }
-  function LoggedOut(){
+  function logOut() {
     setLoggedIn(false)
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
-        <Header loggedIn={loggedIn} userEmail={userEmail} LoggedOut={LoggedOut}/>
+        <Header loggedIn={loggedIn} userEmail={userEmail} LoggedOut={logOut} />
         <Routes>
           <Route
             path='/'
@@ -191,11 +192,11 @@ export default function App() {
           <Route
             path='/sign-up'
             element={<Register handleRegister={handleRegister} />}
-          /> 
+          />
           <Route
             path='/sign-in'
             element={<Login handleLogin={handleLogin} />}
-          />          
+          />
           <Route
             path='/mesto'
             element={
@@ -236,7 +237,7 @@ export default function App() {
                 <ImagePopup
                   card={selectedCard}
                   onClose={closeAllPopups}
-                ></ImagePopup>
+                />
               </>
             }
           />

@@ -1,16 +1,18 @@
 export default function PopupWithForm(props) {
   return (
     <section
-      className={`popup popup_type_${props.name} ${props.isOpen && 'popup_opened'}`}>
+      className={`popup popup_type_${props.name} ${props.isOpen && 'popup_opened'
+        }`}
+    >
       <div className='popup__container popup__overlay-close'>
         <button
           className='popup__close-icon popup__close-icon_type_update-avatar'
           type='button'
           onClick={props.onClose}
-        ></button>
+        />
         <form
           name={`${props.name}`}
-          className='popup__form popup__form_type_update-avatar'
+          className='popup__form'
           onSubmit={props.onSubmit}
         >
           <h2 className='popup__title'>{props.title}</h2>

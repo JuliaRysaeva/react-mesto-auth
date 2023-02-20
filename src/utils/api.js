@@ -69,8 +69,7 @@ class Api {
   addLikeApi(card) {
     return fetch(`${this._url}/cards/${card._id}/likes`, {
       method: 'PUT',
-      headers: this._headers,
-      body: JSON.stringify({ _id: 'a76f63b4457d81002b00501b' })
+      headers: this._headers
     })
       .then(res => this._getServerResult(res))
   }

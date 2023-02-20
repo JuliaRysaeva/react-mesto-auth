@@ -10,16 +10,16 @@ export default function Header({ loggedIn, userEmail, LoggedOut }) {
   }
   return (
     <header className='header'>
-      <img src={logo} className='header__logo' alt='Мeсто' />
+      <img src={logo} className='header__logo' alt='логотип сайта Место' />
       {loggedIn ? (
         <div className='header__links'>
           <p className='header__email'>{userEmail}</p>
           <Link className='header__link' to='/sign-in' onClick={handleLogout}>Выйти</Link>
         </div>
       ) : location.pathname === '/sign-up' ? (
-        <Link className='header__link' to='/sign-in' onClick={handleLogout}>Регистрация</Link>
+        <Link className='header__link' to='/sign-in' onClick={handleLogout}>Войти</Link>
       ) : (
-        <Link className='header__link' to='/sign-up' onClick={handleLogout}>Войти</Link>
+        <Link className='header__link' to='/sign-up' onClick={handleLogout}>Регистрация</Link>
       )}
     </header>
   );

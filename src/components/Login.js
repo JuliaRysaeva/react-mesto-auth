@@ -1,11 +1,17 @@
 import React from 'react';
 
-export default function Login({handleLogin}) {
+export default function Login({ handleLogin }) {
   const [userData, setUserData] = React.useState({ email: '', password: '' });
+
+  React.useEffect(() => {
+    //очищение полей формы
+    setUserData({ email: '', password: '' });
+  }, []);
+
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setUserData({...userData,[name]: value})
+    setUserData({ ...userData, [name]: value })
   }
 
   function handleSubmit(e) {
@@ -14,7 +20,6 @@ export default function Login({handleLogin}) {
       return;
     }
     handleLogin(userData);
-    setUserData({ email:'', password:''});
   }
 
   return (
